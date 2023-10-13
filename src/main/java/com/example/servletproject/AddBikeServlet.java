@@ -18,7 +18,7 @@ public class AddBikeServlet extends HttpServlet {
         String speeds = request.getParameter("speeds");
         PrintWriter out = response.getWriter();
         try {
-            Connection conn = getBicyclesDatabaseConnection();
+            Connection conn = DatabaseConnection.getBicyclesDatabaseConnection();
             PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO bicycles(name, speeds) VALUES (?, ?)");
 
             preparedStatement.setString(1, name);
@@ -38,19 +38,6 @@ public class AddBikeServlet extends HttpServlet {
             out.println("<h1>" + ex.toString() + "</h1>");
             out.println("</body></html>");
         }
-
-    }
-
-    public Connection getBicyclesDatabaseConnection() throws SQLException {
-        try {
-            Class.forName("org.mariadb.jdbc.Driver");
-
-        }
-        catch( ClassNotFoundException ex) {
-            ex.printStackTrace();
-        }
-
-        return DriverManager.getConnection("jdbc:mariadb://localhost:3306/bike_collection", "root", "root");
 
     }
 }
