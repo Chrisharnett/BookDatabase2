@@ -5,7 +5,7 @@
 <%
 
 %>
-<a href="BookCollection">View Collection</a>
+<a href="BookData">View Collection</a>
 <a href="add_book.jsp">Add Book</a>
 <a href="add_author.jsp">Add Author</a>
 </body>

@@ -12,7 +12,7 @@
 </head>
 <body>
 
-<form action="AddBook" method="Post">
+<form action="BookData" method="Post">
     Title: <input type ="text" name="title"><br>
     ISBN: <input type ="text" name="isbn"><br>
     Author (Last Name, First Name): <input type ="text" name="author"><br>
