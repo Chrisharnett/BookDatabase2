@@ -9,19 +9,10 @@ public class MyServlet1 extends HttpServlet {
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) {
         try{
-
             // create a database connection
-
             //query all the recipes
-
             //create a list of all recipes
-
-
             // take my recipe list and send it to a java server page
-
-
-
-
 
             response.setContentType("text/html");
             PrintWriter pwriter = response.getWriter();

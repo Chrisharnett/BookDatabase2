@@ -12,9 +12,12 @@
 </head>
 <body>
 
-<form action="AddBike" method="Post">
-    Name: <input type ="text" name="name"><br>
-    speeds: <input type="text" name="speeds"><br>
+<form action="AddBook" method="Post">
+    Title: <input type ="text" name="title"><br>
+    ISBN: <input type ="text" name="isbn"><br>
+    Author (Last Name, First Name): <input type ="text" name="author"><br>
+    Edition: <input type="text" name="edition"><br>
+    Copyright: <input type="text" name="copyright"><br>
     <input type="submit" value="submit">
 </form>
 

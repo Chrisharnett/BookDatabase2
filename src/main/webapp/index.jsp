@@ -5,7 +5,8 @@
 <%
 
 %>
-<a href="BikeCollection">View Collection</a>
-<a href="add_bicycle.jsp">Add Bicycle</a>
+<a href="BookCollection">View Collection</a>
+<a href="add_book.jsp">Add Book</a>
+<a href="add_author.jsp">Add Author</a>
 </body>
 </html>
