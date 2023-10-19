@@ -22,15 +22,8 @@ public class AuthorData extends HttpServlet {
 //        LinkedList<Book> bookList = new LinkedList<>();
         LinkedList<Author> authorList = new LinkedList<>();
         try (Connection conn = DatabaseConnection.initDatabase()){
-            // get all the books
-            Statement statement = conn.createStatement();
-//            String sqlQuery = "SELECT * from titles";
-//            ResultSet resultSet = statement.executeQuery(sqlQuery);
-//
-//            while (resultSet.next()) {
-//                bookList.add(new Book(resultSet.getString(1), resultSet.getString(2), resultSet.getInt(3), resultSet.getString(4)));
-//            }
 
+            Statement statement = conn.createStatement();
             // Get all the authors
             ResultSet authorsResultSet = statement.executeQuery("SELECT * FROM authors");
             while (authorsResultSet.next()) {
@@ -80,15 +73,17 @@ public class AuthorData extends HttpServlet {
 
         try (Connection conn = DatabaseConnection.initDatabase()){
             PreparedStatement newAuthorStatement = conn.prepareStatement("INSERT INTO authors VALUES (default, ?, ?)");
-            newAuthorStatement.setString(1, lastName);
-            newAuthorStatement.setString(2, firstName);
+            newAuthorStatement.setString(1, firstName);
+            newAuthorStatement.setString(2, lastName);
             newAuthorStatement.executeQuery();
 
-            out.println("<html><body><jsp:include page=\"navbar.jsp\" /><br><br>");
-            out.println("<h1>New Author Added!</h1>");
-            out.println("<h2>" + lastName + ", " + firstName + "</h2>");
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("author_added.jsp");
+            request.setAttribute("firstName", firstName);
+            request.setAttribute("lastName", lastName);
+            requestDispatcher.forward(request, response);
+
         }
-        catch( SQLException ex) {
+        catch(SQLException | ServletException ex) {
             ex.printStackTrace();
             out.println("<html><body>");
             out.println("<h1>" + ex + "</h1>");

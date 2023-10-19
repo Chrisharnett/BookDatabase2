@@ -104,10 +104,7 @@ public class BookData extends HttpServlet{
             }
 
             if (author != null) {
-                PreparedStatement bookStatement = conn.prepareStatement("INSERT INTO titles" +
-                        "(isbn, title, editionNumber, copyright)" +
-                        "VALUES" +
-                        "(?, ?, ?, ?);");
+                PreparedStatement bookStatement = conn.prepareStatement("INSERT INTO titles(isbn, title, editionNumber, copyright)VALUES(?, ?, ?, ?);");
 
                 bookStatement.setString(1, isbn);
                 bookStatement.setString(2, title);
@@ -122,14 +119,16 @@ public class BookData extends HttpServlet{
 
                 authorISBNStatement.executeQuery();
 
-                out.println("<html><body><jsp:include page=\"navbar.jsp\" /><br><br>");
-                out.println("<h1>New Book Added!</h1>");
-                out.println("<h2>" + title + "</h2>");
-                out.println("<h3> Author: " + authorLastName + ", " + authorFirstName   + "</h3>");
-                out.println("<h3> ISBN: " + isbn + "</h3>");
-                out.println("<h3> Edition: " + edition + "</h3>");
-                out.println("<h3> Copyright: " + copyright + "</h3>");
-                out.println("</body></html>");
+                Book newBook = new Book(isbn, title, Integer.parseInt(edition), copyright);
+                List<Author> authorList = new LinkedList<>();
+
+                // Just one author in new books added to database.
+                authorList.add(author);
+                newBook.setAuthorList(authorList);
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("book_added.jsp");
+                request.setAttribute("newBook", newBook);
+                requestDispatcher.forward(request, response);
+//
             }
             else{
                 out.println("<html><body>");
@@ -139,7 +138,7 @@ public class BookData extends HttpServlet{
             }
 
         }
-        catch( SQLException ex) {
+        catch(SQLException | ServletException ex) {
             ex.printStackTrace();
             out.println("<html><body>");
             out.println("<h1>" + ex + "</h1>");
