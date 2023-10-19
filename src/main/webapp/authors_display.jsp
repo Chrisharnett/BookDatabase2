@@ -14,17 +14,20 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <title>Title</title>
 </head>
-<body>
+<body class="p-3">
 <jsp:include page="navbar.jsp" />
-<% LinkedList<Author> authorList = (LinkedList<Author>) request.getAttribute("authorList");
-  for( Author author: authorList) {
-    out.println("<h2>" + author.printAuthorName() + "</h2>");
-    out.println("<h3> Title(s): ");
-    for (Book b: author.getBookList()){
-      out.println( " | " + b.getTitle());
-    };
-    out.println("<br>");
-  }
-%>
+<div class="p-4">
+  <% LinkedList<Author> authorList = (LinkedList<Author>) request.getAttribute("authorList");
+    for( Author author: authorList) {
+      out.println("<h2>" + author.printAuthorName() + "</h2>");
+      out.println("<p> Title(s): ");
+      for (Book b: author.getBookList()){
+        out.println( " | " + b.getTitle());
+      };
+      out.println("</p>");
+    }
+  %>
+</div>
+
 </body>
 </html>

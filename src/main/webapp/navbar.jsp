@@ -13,18 +13,18 @@
   <title>Title</title>
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-      <li class="nav-item p3">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between p-2">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item nav-link active">
         <a href="BookData">Browse by Title</a>
       </li>
-      <li class="nav-item p3">
+      <li class="nav-item nav-link">
         <a href="add_book.jsp">Add Book</a>
       </li>
-      <li class="nav-item p3">
+      <li class="nav-item nav-link">
         <a href="AuthorData">Browse by Author</a>
       </li>
-      <li class="nav-item p3">
+      <li class="nav-item nav-link">
         <a href="add_author.jsp">Add Author</a>
       </li>
     </ul>

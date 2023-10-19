@@ -16,21 +16,23 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <title>Title</title>
 </head>
-<body>
+<body class="p-3">
 <jsp:include page="navbar.jsp" />
-<% LinkedList<Book> bookList = (LinkedList<Book>) request.getAttribute("bookList");
-    for( Book book: bookList) {
-        out.println("<h2> Title: " + book.getTitle() + "</h2>");
-        out.println("<h3> Author(s): ");
-        for (Author author: book.getAuthorList()){
-            out.println(author.printAuthorName() + "; ");
-        };
-        out.println("<h3> ISBN: " + book.getISBN() + "</h3>");
-        out.println("<h3> Edition Number: " + book.getEdition() + "</h2>");
-        out.println("<h3> Copyright: " + book.getCopyright() + "</h2>");
-        out.println("<br>");
-    }
-%>
-
+<div class="p-4">
+    <% LinkedList<Book> bookList = (LinkedList<Book>) request.getAttribute("bookList");
+        for( Book book: bookList) {
+            out.println("<div class='p3'><h2>" + book.getTitle() + "</h2>");
+            out.println("<p> Author(s): ");
+            for (Author author: book.getAuthorList()){
+                out.println(author.printAuthorName() + "; ");
+            };
+            out.println("</p>");
+            out.println("<p> ISBN: " + book.getISBN() + "</p>");
+            out.println("<p> Edition Number: " + book.getEdition() + "</p>");
+            out.println("<p> Copyright: " + book.getCopyright() + "</p>");
+            out.println("<br></div>");
+        }
+    %>
+</div>
 </body>
 </html>

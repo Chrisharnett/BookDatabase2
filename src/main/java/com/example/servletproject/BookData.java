@@ -67,7 +67,7 @@ public class BookData extends HttpServlet{
         catch( SQLException ex) {
             PrintWriter out = response.getWriter();
             out.println("<html><body>");
-            out.println("<h1>" + ex.toString() + "</h1>");
+            out.println("<h1>" + ex + "</h1>");
             out.println("</body></html>");
         }
     }
@@ -79,11 +79,13 @@ public class BookData extends HttpServlet{
         String title = request.getParameter("title");
         String edition = request.getParameter("edition");
         String copyright = request.getParameter("copyright");
-        String authorFullName = request.getParameter("author");
-        String[] fullName = authorFullName.split(",");
+        String authorFirstName = request.getParameter("firstName");
+        String authorLastName = request.getParameter("lastName");
+//        String authorFullName = request.getParameter("author");
+//        String[] fullName = authorFullName.split(",");
         // TODO: Make author names title case.
-        String authorFirstName = fullName[1].trim();
-        String authorLastName = fullName[0].trim();
+//        String authorFirstName = fullName[1].trim();
+//        String authorLastName = fullName[0].trim();
 
         PrintWriter out = response.getWriter();
 
@@ -95,10 +97,12 @@ public class BookData extends HttpServlet{
             authorCheckStatement.setString(2, authorLastName);
             ResultSet authorResults = authorCheckStatement.executeQuery();
             Author author = null;
+            // Check if the author exists already
             while (authorResults.next()){
                 author = new Author(authorResults.getInt(1), authorResults.getString(2), authorResults.getString(3));
                 break;
             }
+
             if (author != null) {
                 PreparedStatement bookStatement = conn.prepareStatement("INSERT INTO titles" +
                         "(isbn, title, editionNumber, copyright)" +
@@ -118,10 +122,10 @@ public class BookData extends HttpServlet{
 
                 authorISBNStatement.executeQuery();
 
-                out.println("<html><body>");
+                out.println("<html><body><jsp:include page=\"navbar.jsp\" /><br><br>");
                 out.println("<h1>New Book Added!</h1>");
                 out.println("<h2>" + title + "</h2>");
-                out.println("<h3> Author: " + authorFullName  + "</h3>");
+                out.println("<h3> Author: " + authorLastName + ", " + authorFirstName   + "</h3>");
                 out.println("<h3> ISBN: " + isbn + "</h3>");
                 out.println("<h3> Edition: " + edition + "</h3>");
                 out.println("<h3> Copyright: " + copyright + "</h3>");
@@ -138,7 +142,7 @@ public class BookData extends HttpServlet{
         catch( SQLException ex) {
             ex.printStackTrace();
             out.println("<html><body>");
-            out.println("<h1>" + ex.toString() + "</h1>");
+            out.println("<h1>" + ex + "</h1>");
             out.println("</body></html>");
         }
 

@@ -2,7 +2,6 @@ package com.example.servletproject;
 import java.sql.*;
 import java.io.*;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import jakarta.servlet.RequestDispatcher;
@@ -20,17 +19,17 @@ public class AuthorData extends HttpServlet {
 
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) throws IOException, ServletException {
-        LinkedList<Book> bookList = new LinkedList<>();
+//        LinkedList<Book> bookList = new LinkedList<>();
         LinkedList<Author> authorList = new LinkedList<>();
         try (Connection conn = DatabaseConnection.initDatabase()){
             // get all the books
             Statement statement = conn.createStatement();
-            String sqlQuery = "SELECT * from titles";
-            ResultSet resultSet = statement.executeQuery(sqlQuery);
-
-            while (resultSet.next()) {
-                bookList.add(new Book(resultSet.getString(1), resultSet.getString(2), resultSet.getInt(3), resultSet.getString(4)));
-            }
+//            String sqlQuery = "SELECT * from titles";
+//            ResultSet resultSet = statement.executeQuery(sqlQuery);
+//
+//            while (resultSet.next()) {
+//                bookList.add(new Book(resultSet.getString(1), resultSet.getString(2), resultSet.getInt(3), resultSet.getString(4)));
+//            }
 
             // Get all the authors
             ResultSet authorsResultSet = statement.executeQuery("SELECT * FROM authors");
@@ -68,7 +67,7 @@ public class AuthorData extends HttpServlet {
         catch( SQLException ex) {
             PrintWriter out = response.getWriter();
             out.println("<html><body>");
-            out.println("<h1>" + ex.toString() + "</h1>");
+            out.println("<h1>" + ex + "</h1>");
             out.println("</body></html>");
         }
     }
@@ -85,14 +84,14 @@ public class AuthorData extends HttpServlet {
             newAuthorStatement.setString(2, firstName);
             newAuthorStatement.executeQuery();
 
-            out.println("<html><body>");
+            out.println("<html><body><jsp:include page=\"navbar.jsp\" /><br><br>");
             out.println("<h1>New Author Added!</h1>");
             out.println("<h2>" + lastName + ", " + firstName + "</h2>");
         }
         catch( SQLException ex) {
             ex.printStackTrace();
             out.println("<html><body>");
-            out.println("<h1>" + ex.toString() + "</h1>");
+            out.println("<h1>" + ex + "</h1>");
             out.println("</body></html>");
         }
     }
