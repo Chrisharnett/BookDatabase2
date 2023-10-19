@@ -1,6 +1,4 @@
 package com.example.servletproject;
-
-import java.awt.print.Book;
 import java.util.List;
 
 /**
@@ -11,7 +9,7 @@ public class Author {
     private int id;
     private String firstName;
     private String lastName;
-    private List<Book> bookList;
+    private List<com.example.servletproject.Book> bookList;
 
     public Author(int id, String firstName, String lastName) {
         this.id = id;
