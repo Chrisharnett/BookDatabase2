@@ -22,7 +22,7 @@ public class BookData extends HttpServlet{
 
         LinkedList<Book> bookList = new LinkedList<>();
         LinkedList<Author> authorList = new LinkedList<>();
-        try (Connection conn = DatabaseConnection.initDatabase()){
+        try (Connection conn = DBConnection.initDatabase()){
             // get all the books
             Statement statement = conn.createStatement();
             String sqlQuery = "SELECT * from titles";
@@ -60,7 +60,7 @@ public class BookData extends HttpServlet{
                 book.setAuthorList(bookAuthors);
             }
             // Set booklist as attribute and call jsp.
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("books_display.jsp");
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("view_books.jsp");
             request.setAttribute("bookList", bookList);
             requestDispatcher.forward(request, response);
         }
@@ -81,15 +81,10 @@ public class BookData extends HttpServlet{
         String copyright = request.getParameter("copyright");
         String authorFirstName = request.getParameter("firstName");
         String authorLastName = request.getParameter("lastName");
-//        String authorFullName = request.getParameter("author");
-//        String[] fullName = authorFullName.split(",");
-        // TODO: Make author names title case.
-//        String authorFirstName = fullName[1].trim();
-//        String authorLastName = fullName[0].trim();
 
         PrintWriter out = response.getWriter();
 
-        try (Connection conn = DatabaseConnection.initDatabase()){
+        try (Connection conn = DBConnection.initDatabase()){
             PreparedStatement authorCheckStatement = conn.prepareStatement("SELECT * from authors " +
                     "WHERE ? = firstName AND " +
                     "? = lastName");
@@ -97,13 +92,10 @@ public class BookData extends HttpServlet{
             authorCheckStatement.setString(2, authorLastName);
             ResultSet authorResults = authorCheckStatement.executeQuery();
             Author author = null;
-            // Check if the author exists already
-            while (authorResults.next()){
-                author = new Author(authorResults.getInt(1), authorResults.getString(2), authorResults.getString(3));
-                break;
-            }
 
-            if (author != null) {
+            // Check if the author exists already and execute logic
+            if (authorResults.next()){
+                author = new Author(authorResults.getInt(1), authorResults.getString(2), authorResults.getString(3));
                 PreparedStatement bookStatement = conn.prepareStatement("INSERT INTO titles(isbn, title, editionNumber, copyright)VALUES(?, ?, ?, ?);");
 
                 bookStatement.setString(1, isbn);
@@ -128,13 +120,11 @@ public class BookData extends HttpServlet{
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("book_added.jsp");
                 request.setAttribute("newBook", newBook);
                 requestDispatcher.forward(request, response);
-//
             }
+
             else{
-                out.println("<html><body>");
-                out.println("<h1>Author not found</h1>");
-                out.println("<h1> Follow this link to add an author</h1>");
-                out.println("</body></html>");
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("author_not_found.jsp");
+                requestDispatcher.forward(request, response);
             }
 
         }
@@ -144,6 +134,5 @@ public class BookData extends HttpServlet{
             out.println("<h1>" + ex + "</h1>");
             out.println("</body></html>");
         }
-
     }
 }

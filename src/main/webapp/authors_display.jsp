@@ -24,7 +24,7 @@
     <% for (Book b: author.getBookList()){ %>
        <%= "| " + b.getTitle() %>
     <% }; %>
-    </p>
+    </p><hr>
   <% } %>
 </div>
 

@@ -25,11 +25,12 @@
         <h2><%= book.getTitle() %></h2>
         <p> Author(s):
             <% for (Author author: book.getAuthorList()){ %>
-                <%= author.printAuthorName() %>
+                <%= author.printAuthorName() + " | " %>
             <% }; %> </p>
             <p> ISBN: <%= book.getISBN() %></p>
             <p> Edition Number: <%= book.getEdition() %></p>
             <p> Copyright: <%= book.getCopyright() %></p>
+            <hr>
             <br></div>
         <% } %>
 </div>

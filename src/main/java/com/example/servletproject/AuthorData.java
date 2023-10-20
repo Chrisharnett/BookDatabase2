@@ -19,9 +19,9 @@ public class AuthorData extends HttpServlet {
 
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) throws IOException, ServletException {
-//        LinkedList<Book> bookList = new LinkedList<>();
+
         LinkedList<Author> authorList = new LinkedList<>();
-        try (Connection conn = DatabaseConnection.initDatabase()){
+        try (Connection conn = DBConnection.initDatabase()){
 
             Statement statement = conn.createStatement();
             // Get all the authors
@@ -71,7 +71,7 @@ public class AuthorData extends HttpServlet {
 
         PrintWriter out = response.getWriter();
 
-        try (Connection conn = DatabaseConnection.initDatabase()){
+        try (Connection conn = DBConnection.initDatabase()){
             PreparedStatement newAuthorStatement = conn.prepareStatement("INSERT INTO authors VALUES (default, ?, ?)");
             newAuthorStatement.setString(1, firstName);
             newAuthorStatement.setString(2, lastName);
